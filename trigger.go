@@ -196,26 +196,26 @@ type TriggerGetParams struct {
 // ErrTriggerNotFound is returned if the search result set is empty.
 // An error is returned if a transport, parsing or API error occurs.
 func (c *Session) GetTriggers(params TriggerGetParams) ([]Trigger, error) {
-	triggers := make([]jTrigger, 0)
-	err := c.Get("trigger.get", params, &triggers)
-	if err != nil {
-		return nil, err
-	}
+    triggers := make([]jTrigger, 0)
+    err := c.Get("trigger.get", params, &triggers)
+    if err != nil {
+        return nil, err
+    }
 
-	if len(triggers) == 0 {
-		return nil, ErrNotFound
-	}
+    if len(triggers) == 0 {
+        return nil, ErrNotFound
+    }
 
-	// map JSON Triggers to Go Triggers
-	out := make([]Trigger, len(triggers))
-	for i, jtrigger := range triggers {
-		trigger, err := jtrigger.Trigger()
-		if err != nil {
-			return nil, fmt.Errorf("Error mapping Trigger %d in response: %v", i, err)
-		}
+    // map JSON Triggers to Go Triggers
+    out := make([]Trigger, len(triggers))
+    for i, jtrigger := range triggers {
+        trigger, err := jtrigger.Trigger()
+        if err != nil {
+            return nil, fmt.Errorf("Error mapping Trigger %d in response: %v", i, err)
+        }
 
-		out[i] = *trigger
-	}
+        out[i] = *trigger
+    }
 
-	return out, nil
+    return out, nil
 }

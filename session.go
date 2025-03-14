@@ -103,7 +103,7 @@ func (c *Session) AuthToken() string {
 // Generally Get or a wrapper function will be used instead of Do.
 func (c *Session) Do(req *Request) (resp *Response, err error) {
     // configure request
-    req.AuthToken = c.Token
+    //req.AuthToken = c.Token
 
     // encode request as json
     b, err := json.Marshal(req)
@@ -120,6 +120,7 @@ func (c *Session) Do(req *Request) (resp *Response, err error) {
     }
     r.ContentLength = int64(len(b))
     r.Header.Add("Content-Type", "application/json-rpc")
+    r.Header.Add("Authorization", "Bearer "+c.Token)
 
     // send request
     client := c.client

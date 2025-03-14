@@ -12,7 +12,7 @@ import (
 type Request struct {
 	// JSONRPCVersion is the version string of the Zabbix API. This should
 	// always be set to "2.0".
-	JSONRPCVersion string `json:"jsonrpc"`
+	JSONRPC string `json:"jsonrpc"`
 
 	// Method is the name of the Zabbix API method to be called.
 	Method string `json:"method"`
@@ -28,7 +28,7 @@ type Request struct {
 
 	// AuthToken is the Request's authentication token. When used in a Session,
 	// this value is overwritten by the Session.
-	AuthToken string `json:"auth,omitempty"`
+    //AuthToken string `json:"auth,omitempty"`
 }
 
 // requestId is a global counter used to assign each APi request a unique ID.
@@ -41,10 +41,10 @@ func NewRequest(method string, params interface{}) *Request {
 		params = map[string]string{}
 	}
 	return &Request{
-		JSONRPCVersion: "2.0",
+		JSONRPC: "2.0",
 		Method:         method,
 		Params:         params,
 		RequestID:      atomic.AddUint64(&requestID, 1),
-		AuthToken:      "", // set by session
+        //AuthToken:      "", // set by session
 	}
 }
